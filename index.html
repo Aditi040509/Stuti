@@ -15,7 +15,7 @@ font-family:Arial,sans-serif;
 
 body{
 background:linear-gradient(135deg,#ffd6e7,#ffeaf4);
-height:100vh;
+min-height:100vh;
 overflow:hidden;
 display:flex;
 justify-content:center;
@@ -36,113 +36,159 @@ margin-bottom:15px;
 }
 
 p{
-font-size:20px;
+font-size:18px;
 line-height:1.6;
 color:#444;
 }
 
 img{
 width:100%;
-max-height:70vh;
-object-fit:cover;
 border-radius:20px;
 box-shadow:0 0 15px rgba(0,0,0,.15);
 }
 
-.collage{
+.box{
+background:white;
+padding:18px;
+margin:10px;
+border-radius:20px;
+box-shadow:0 5px 15px #ffb6d2;
+}
+
+button{
+background:#ff4f8b;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:25px;
+font-size:16px;
+margin-top:15px;
+}
+
+.letter{
+background:#fff;
+padding:25px;
+border-radius:15px;
+animation:open 1s ease;
+box-shadow:0 0 20px #ffb6d2;
+}
+
+.puzzle{
 display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+grid-template-columns:repeat(4,1fr);
+gap:2px;
 }
 
-.collage img{
-height:160px;
-}
-
-.tap{
-margin-top:20px;
-font-size:14px;
-opacity:.7;
+.piece{
+aspect-ratio:1;
+background-repeat:no-repeat;
+border:1px solid white;
 }
 
 .heart{
 position:absolute;
-color:#ff5f9e;
 animation:float 6s linear infinite;
 }
 
-@keyframes float{
-0%{transform:translateY(100vh);}
-100%{transform:translateY(-100px);}
+@keyframes fade{
+from{opacity:0;transform:scale(.9);}
+to{opacity:1;transform:scale(1);}
 }
 
-@keyframes fade{
-from{
-opacity:0;
-transform:scale(.95);
+@keyframes open{
+from{transform:rotateX(90deg);}
+to{transform:rotateX(0);}
 }
-to{
-opacity:1;
-transform:scale(1);
-}
+
+@keyframes float{
+from{transform:translateY(100vh);}
+to{transform:translateY(-100px);}
 }
 </style>
 </head>
 
-<body onclick="nextPage()">
+<body>
 
 <div id="content" class="screen"></div>
-
 <script>
+
+const content = document.getElementById("content");
+
+let current = 0;
 
 const pages = [
 
-`<h1>Heyyyy!!!!!!</h1>
+`<div class="box">
+<h1>Heyyyy!!!!!! 💖</h1>
 <p>
 I have made something just for you... ✨<br><br>
-(Don't cry, which I know u will not 😒 but ChatGPT ne bola likh de toh likh diya 😂)
+(Don't cry 😂)
 </p>
-<div class="tap">Tap anywhere 💖</div>`,
+<p>Tap anywhere 💕</p>
+</div>`,
 
-`<h1>💖</h1>
-<p>Just remember that I love you.</p>`,
+`<div class="box">
+<h1>💖</h1>
+<p>Just remember that I love you.</p>
+</div>`,
 
 `<img src="photo1.jpg">`,
 
-`<h1>💚</h1>
-<p>I will always be by your side.</p>`,
+`<div class="box">
+<h1>💚</h1>
+<p>I will always be by your side.</p>
+</div>`,
 
 `<img src="photo2.jpg">`,
 
-`<h1>✨</h1>
-<p>Never dare to forget the memories we had.</p>`,
+`<div id="puzzle3"></div>`,
 
-`<img src="photo3.jpg">`,
-
-`<h1>🌸</h1>
-<p>You are the best and the cutest girl I have ever met.</p>`,
-
-`<img src="photo4.jpg">`,
-
-`<h1>🎉</h1>
-<p>Cheers to our 9 years of friendship.</p>`,
-
-`<img src="photo5.jpg">`,
-
-`<h1>💚</h1>
-<p>Just remember that u mean a lot to me.</p>`,
-
-`<div class="collage">
-<img src="photo6.jpg">
-<img src="photo7.jpg">
-<img src="photo8.jpg">
-<img src="photo9.jpg">
-<img src="photo10.jpg">
+`<div class="box">
+<h1>🌸</h1>
+<p>You are the best and the cutest girl I have ever met.</p>
 </div>`,
 
-`<h1>❤️ Hiii...</h1>
+`<div id="puzzle4"></div>`,
 
-<p style="font-size:18px">
+`<div class="box">
+<h1>🎉</h1>
+<p>Cheers to our 9 years of friendship.</p>
+</div>`,
+
+`<div class="box">
+<h1>💬 Little Messages 💖</h1>
+
+<div class="box">You are very special to me ❤️</div>
+<div class="box">Thank you for always being there 🫶</div>
+<div class="box">Never forget our memories ✨</div>
+
+</div>`,
+
+`<div class="box">
+<h1>🔐 Secret Puzzle</h1>
+
+<p>Answer these questions to open your letter 💌</p>
+
+<input id="q1" placeholder="Class when we became friends">
+<br><br>
+
+<input id="q2" placeholder="The unforgettable date">
+<br><br>
+
+<input id="q3" placeholder="Our password">
+
+<br>
+<button onclick="checkCode()">Unlock 💌</button>
+
+<p id="error"></p>
+
+</div>`,
+
+`<div class="letter">
+
+<h1>❤️ Hiii...</h1>
+
+<p>
 
 Just wanna say thank you for being the most amazing friend I could ever ask for.<br><br>
 
@@ -158,29 +204,188 @@ I will keep u with me always ❤️<br><br>
 
 Love you 🫶
 
-</p>`
+</p>
+
+</div>`
 
 ];
 
-let current=0;
 
-document.getElementById("content").innerHTML=pages[0];
+content.innerHTML = pages[0];
+
 
 function nextPage(){
+
 if(current < pages.length-1){
+
 current++;
-document.getElementById("content").innerHTML=pages[current];
-}
+
+content.innerHTML = pages[current];
+
+if(current===5){
+createPuzzle("photo3.jpg","puzzle3");
 }
 
+if(current===7){
+createPuzzle("photo4.jpg","puzzle4");
+}
+
+}
+
+}
+
+document.body.onclick=function(e){
+
+if(e.target.tagName!=="BUTTON"){
+nextPage();
+}
+
+}
+
+
+function checkCode(){
+
+let a=document.getElementById("q1").value.toLowerCase();
+let b=document.getElementById("q2").value.toLowerCase();
+let c=document.getElementById("q3").value.toLowerCase();
+
+
+if(a=="4th class" && b=="5th july" && c=="1234567890as"){
+
+current++;
+content.innerHTML=pages[current];
+
+}
+
+else{
+
+document.getElementById("error").innerHTML="Wrong answer 😜 Try again";
+
+}
+
+}
+  function createPuzzle(image, id){
+
+let box=document.getElementById(id);
+
+let pieces=[];
+
+for(let i=0;i<16;i++){
+pieces.push(i);
+}
+
+pieces.sort(()=>Math.random()-0.5);
+
+
+let html=`<h1>🧩 Solve the Puzzle</h1>
+<div class="puzzle">`;
+
+pieces.forEach((piece)=>{
+
+let x=piece%4;
+let y=Math.floor(piece/4);
+
+html+=`
+<div class="piece"
+style="
+background-image:url('${image}');
+background-size:400% 400%;
+background-position:${x*33.33}% ${y*33.33}%;
+"
+onclick="movePiece(this)">
+</div>`;
+
+});
+
+html+=`</div>
+<p id="${id}msg"></p>`;
+
+box.innerHTML=html;
+
+}
+
+
+let clicked=[];
+
+function movePiece(el){
+
+clicked.push(el);
+
+if(clicked.length==2){
+
+let a=clicked[0].style.backgroundPosition;
+let b=clicked[1].style.backgroundPosition;
+
+clicked[0].style.backgroundPosition=b;
+clicked[1].style.backgroundPosition=a;
+
+clicked=[];
+
+}
+
+checkPuzzle();
+
+}
+
+
+function checkPuzzle(){
+
+let pieces=document.querySelectorAll(".piece");
+
+if(pieces.length==16){
+
+let correct=true;
+
+pieces.forEach((p,i)=>{
+
+let x=i%4;
+let y=Math.floor(i/4);
+
+let pos=`${x*33.33}% ${y*33.33}%`;
+
+if(p.style.backgroundPosition!==pos){
+correct=false;
+}
+
+});
+
+
+if(correct){
+
+let btn=document.createElement("button");
+
+btn.innerHTML="Next 💖";
+
+btn.onclick=function(){
+
+nextPage();
+
+};
+
+document.querySelector(".puzzle").after(btn);
+
+}
+
+}
+
+}
+
+
+// floating hearts
+
 for(let i=0;i<25;i++){
+
 let heart=document.createElement("div");
+
 heart.className="heart";
 heart.innerHTML="💖";
+
 heart.style.left=Math.random()*100+"vw";
 heart.style.fontSize=(15+Math.random()*20)+"px";
 heart.style.animationDuration=(4+Math.random()*4)+"s";
+
 document.body.appendChild(heart);
+
 }
 
 </script>
