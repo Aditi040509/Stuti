@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Stuti 💖</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:linear-gradient(135deg,#ffd6e7,#ffeaf4);
+height:100vh;
+overflow:hidden;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+}
+
+.screen{
+width:90%;
+max-width:500px;
+padding:25px;
+animation:fade .6s ease;
+}
+
+h1{
+color:#ff4f8b;
+margin-bottom:15px;
+}
+
+p{
+font-size:20px;
+line-height:1.6;
+color:#444;
+}
+
+img{
+width:100%;
+max-height:70vh;
+object-fit:cover;
+border-radius:20px;
+box-shadow:0 0 15px rgba(0,0,0,.15);
+}
+
+.collage{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+.collage img{
+height:160px;
+}
+
+.tap{
+margin-top:20px;
+font-size:14px;
+opacity:.7;
+}
+
+.heart{
+position:absolute;
+color:#ff5f9e;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(100vh);}
+100%{transform:translateY(-100px);}
+}
+
+@keyframes fade{
+from{
+opacity:0;
+transform:scale(.95);
+}
+to{
+opacity:1;
+transform:scale(1);
+}
+}
+</style>
+</head>
+
+<body onclick="nextPage()">
+
+<div id="content" class="screen"></div>
+
+<script>
+
+const pages = [
+
+`<h1>Heyyyy!!!!!!</h1>
+<p>
+I have made something just for you... ✨<br><br>
+(Don't cry, which I know u will not 😒 but ChatGPT ne bola likh de toh likh diya 😂)
+</p>
+<div class="tap">Tap anywhere 💖</div>`,
+
+`<h1>💖</h1>
+<p>Just remember that I love you.</p>`,
+
+`<img src="photo1.jpg">`,
+
+`<h1>💚</h1>
+<p>I will always be by your side.</p>`,
+
+`<img src="photo2.jpg">`,
+
+`<h1>✨</h1>
+<p>Never dare to forget the memories we had.</p>`,
+
+`<img src="photo3.jpg">`,
+
+`<h1>🌸</h1>
+<p>You are the best and the cutest girl I have ever met.</p>`,
+
+`<img src="photo4.jpg">`,
+
+`<h1>🎉</h1>
+<p>Cheers to our 9 years of friendship.</p>`,
+
+`<img src="photo5.jpg">`,
+
+`<h1>💚</h1>
+<p>Just remember that u mean a lot to me.</p>`,
+
+`<div class="collage">
+<img src="photo6.jpg">
+<img src="photo7.jpg">
+<img src="photo8.jpg">
+<img src="photo9.jpg">
+<img src="photo10.jpg">
+</div>`,
+
+`<h1>❤️ Hiii...</h1>
+
+<p style="font-size:18px">
+
+Just wanna say thank you for being the most amazing friend I could ever ask for.<br><br>
+
+You are truly the most beautiful part of my life. Every moment with you is my favourite.<br><br>
+
+I never thought I would say this... But u mean a lot to me.<br><br>
+
+Maybe we never share our feelings for each other but deep inside we both know how important we both are for each other.<br><br>
+
+Don't know about u 😂 but mere liye toh tu bhut special hai.<br><br>
+
+I will keep u with me always ❤️<br><br>
+
+Love you 🫶
+
+</p>`
+
+];
+
+let current=0;
+
+document.getElementById("content").innerHTML=pages[0];
+
+function nextPage(){
+if(current < pages.length-1){
+current++;
+document.getElementById("content").innerHTML=pages[current];
+}
+}
+
+for(let i=0;i<25;i++){
+let heart=document.createElement("div");
+heart.className="heart";
+heart.innerHTML="💖";
+heart.style.left=Math.random()*100+"vw";
+heart.style.fontSize=(15+Math.random()*20)+"px";
+heart.style.animationDuration=(4+Math.random()*4)+"s";
+document.body.appendChild(heart);
+}
+
+</script>
+
+</body>
+</html>
