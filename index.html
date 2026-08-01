@@ -169,15 +169,18 @@ I have made something just for you... ✨<br><br>
 
 <p>Answer these questions to open your letter 💌</p>
 
-<input id="q1" type="text" placeholder="Answer 1: 4th class">
+<p>1. Hum konsi class me the jb hum dost bane?</p>
+<input id="q1" type="text" placeholder="Your answer">
 
 <br><br>
 
-<input id="q2" type="text" placeholder="Answer 2: 5th July">
+<p>2. Tell one date which we will never forget ❤️</p>
+<input id="q2" type="text" placeholder="Your answer">
 
 <br><br>
 
-<input id="q3" type="text" placeholder="Answer 3: Password">
+<p>3. Our password?</p>
+<input id="q3" type="text" placeholder="Your answer">
 
 <br>
 <button onclick="checkCode()">Unlock 💌</button>
@@ -274,9 +277,9 @@ document.getElementById("error").innerHTML="Wrong answer 😜 Try again";
 }
   function createPuzzle(image, id){
 
-let box=document.getElementById(id);
+let box = document.getElementById(id);
 
-let pieces=[];
+let pieces = [];
 
 for(let i=0;i<16;i++){
 pieces.push(i);
@@ -285,58 +288,130 @@ pieces.push(i);
 pieces.sort(()=>Math.random()-0.5);
 
 
-let html=`<h1>🧩 Solve the Puzzle</h1>
-<div class="puzzle">`;
+let html = `
+<h1>🧩 Solve the Puzzle</h1>
+<div class="puzzle" id="${id}grid">
+`;
 
-pieces.forEach((piece)=>{
 
-let x=piece%4;
-let y=Math.floor(piece/4);
+pieces.forEach(piece=>{
 
-html+=`
+let x = piece % 4;
+let y = Math.floor(piece/4);
+
+html += `
 <div class="piece"
+draggable="true"
+data-index="${piece}"
 style="
 background-image:url('${image}');
 background-size:400% 400%;
 background-position:${x*33.33}% ${y*33.33}%;
-"
-onclick="movePiece(this)">
-</div>`;
+">
+</div>
+`;
 
 });
 
-html+=`</div>
-<p id="${id}msg"></p>`;
 
-box.innerHTML=html;
+html += `
+</div>
+<p id="${id}msg"></p>
+`;
+
+box.innerHTML = html;
+
+
+let allPieces = document.querySelectorAll(`#${id}grid .piece`);
+
+let dragged = null;
+
+
+allPieces.forEach(piece=>{
+
+
+piece.addEventListener("dragstart",function(){
+
+dragged=this;
+
+});
+
+
+piece.addEventListener("dragover",function(e){
+
+e.preventDefault();
+
+});
+
+
+piece.addEventListener("drop",function(){
+
+
+let bg = this.style.backgroundPosition;
+let index = this.dataset.index;
+
+
+this.style.backgroundPosition = dragged.style.backgroundPosition;
+this.dataset.index = dragged.dataset.index;
+
+
+dragged.style.backgroundPosition = bg;
+dragged.dataset.index = index;
+
+
+checkComplete(id);
+
+
+});
+
+
+});
 
 }
 
 
-let clicked=[];
 
-function movePiece(el){
+function checkComplete(id){
 
-clicked.push(el);
+let pieces=document.querySelectorAll(`#${id}grid .piece`);
 
-if(clicked.length==2){
+let complete=true;
 
-let a=clicked[0].style.backgroundPosition;
-let b=clicked[1].style.backgroundPosition;
 
-clicked[0].style.backgroundPosition=b;
-clicked[1].style.backgroundPosition=a;
+pieces.forEach((piece,i)=>{
 
-clicked=[];
+if(Number(piece.dataset.index)!==i){
+
+complete=false;
 
 }
 
-checkPuzzle();
+});
+
+
+if(complete){
+
+document.getElementById(id+"msg").innerHTML=
+"🎉 Puzzle Completed 💖";
+
+
+let button=document.createElement("button");
+
+button.innerHTML="Next 💕";
+
+
+button.onclick=function(){
+
+nextPage();
+
+};
+
+
+document.getElementById(id).appendChild(button);
 
 }
 
-
-function checkPuzzle(){
+  }
 
 let pieces=document.querySelectorAll(".piece");
 
