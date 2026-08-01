@@ -169,13 +169,15 @@ I have made something just for you... ✨<br><br>
 
 <p>Answer these questions to open your letter 💌</p>
 
-<input id="q1" placeholder="Class when we became friends">
+<input id="q1" type="text" placeholder="Answer 1: 4th class">
+
 <br><br>
 
-<input id="q2" placeholder="The unforgettable date">
+<input id="q2" type="text" placeholder="Answer 2: 5th July">
+
 <br><br>
 
-<input id="q3" placeholder="Our password">
+<input id="q3" type="text" placeholder="Answer 3: Password">
 
 <br>
 <button onclick="checkCode()">Unlock 💌</button>
@@ -236,9 +238,15 @@ createPuzzle("photo4.jpg","puzzle4");
 
 document.body.onclick=function(e){
 
-if(e.target.tagName!=="BUTTON"){
-nextPage();
+if(
+e.target.tagName==="INPUT" ||
+e.target.tagName==="BUTTON" ||
+e.target.classList.contains("piece")
+){
+return;
 }
+
+nextPage();
 
 }
 
