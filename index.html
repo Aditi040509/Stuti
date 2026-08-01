@@ -244,7 +244,10 @@ document.body.onclick=function(e){
 if(
 e.target.tagName==="INPUT" ||
 e.target.tagName==="BUTTON" ||
-e.target.classList.contains("piece")
+e.target.classList.contains("piece") ||
+e.target.closest(".puzzle") ||
+e.target.closest("#puzzle3") ||
+e.target.closest("#puzzle4")
 ){
 return;
 }
@@ -265,6 +268,14 @@ if(a=="4th class" && b=="5th july" && c=="1234567890as"){
 
 current++;
 content.innerHTML=pages[current];
+
+}
+
+else{
+
+document.getElementById("error").innerHTML="Wrong answer 😜 Try again";
+
+return;
 
 }
 
