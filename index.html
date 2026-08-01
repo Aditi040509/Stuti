@@ -244,6 +244,26 @@ document.body.onclick=function(e){
 if(
 e.target.tagName==="INPUT" ||
 e.target.tagName==="BUTTON" ||
+e.target.classList.contains("piece")
+){
+return;
+}
+
+if(document.querySelector(".puzzle")){
+return;
+}
+
+if(document.querySelector("#q1")){
+return;
+}
+
+nextPage();
+
+}
+
+if(
+e.target.tagName==="INPUT" ||
+e.target.tagName==="BUTTON" ||
 e.target.classList.contains("piece") ||
 e.target.closest(".puzzle") ||
 e.target.closest("#puzzle3") ||
