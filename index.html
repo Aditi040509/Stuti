@@ -413,45 +413,6 @@ document.getElementById(id).appendChild(button);
 
   }
 
-let pieces=document.querySelectorAll(".piece");
-
-if(pieces.length==16){
-
-let correct=true;
-
-pieces.forEach((p,i)=>{
-
-let x=i%4;
-let y=Math.floor(i/4);
-
-let pos=`${x*33.33}% ${y*33.33}%`;
-
-if(p.style.backgroundPosition!==pos){
-correct=false;
-}
-
-});
-
-
-if(correct){
-
-let btn=document.createElement("button");
-
-btn.innerHTML="Next 💖";
-
-btn.onclick=function(){
-
-nextPage();
-
-};
-
-document.querySelector(".puzzle").after(btn);
-
-}
-
-}
-
-}
 
 
 // floating hearts
