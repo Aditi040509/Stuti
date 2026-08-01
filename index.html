@@ -241,6 +241,17 @@ createPuzzle("photo4.jpg","puzzle4");
 
 document.body.onclick=function(e){
 
+if(e.target.tagName==="INPUT" || e.target.tagName==="BUTTON"){
+return;
+}
+
+if(document.querySelector(".puzzle")){
+return;
+}
+
+nextPage();
+
+}
 if(
 e.target.tagName==="INPUT" ||
 e.target.tagName==="BUTTON" ||
